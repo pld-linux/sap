@@ -22,14 +22,14 @@ S³ownik angielsko-polski i polsko-angielski.
 %patch0 -p1
 
 %build
-gcc $RPM_OPT_FLAGS -o sap sap.c \
--DDATADIR=\"%{_datadir}\" -DSYSCONFDIR=\"%{_sysconfdir}\"
+gcc "%{!?debug:$RPM_OPT_FLAGS}%{?debug:-O -g}" -o sap sap.c \
+	-DDATADIR=\"%{_datadir}\" -DSYSCONFDIR=\"%{_sysconfdir}\"
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir}/%{name},%{_sysconfdir}}
 
-install -s sap $RPM_BUILD_ROOT%{_bindir}
+install sap $RPM_BUILD_ROOT%{_bindir}
 install	lib/sap/dvp_{1,2}.dic $RPM_BUILD_ROOT%{_datadir}/sap/
 install .saprc $RPM_BUILD_ROOT%{_sysconfdir}/saprc
 
