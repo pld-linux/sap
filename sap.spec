@@ -22,7 +22,7 @@ S³ownik angielsko-polski i polsko-angielski.
 %patch0 -p1
 
 %build
-%{__cc} %{?debug:-O0 -g}%{!?debug:$RPM_OPT_FLAGS} -o sap sap.c \
+%{__cc} %{rpmcflags} -o sap sap.c \
 	-DDATADIR=\"%{_datadir}\" -DSYSCONFDIR=\"%{_sysconfdir}\"
 
 %install
