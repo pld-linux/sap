@@ -2,7 +2,7 @@ Summary:	A Polish-English-Polish dictionary
 Summary(pl):	S³ownik polsko-angielski i angielsko-polski
 Name:		sap
 Version:	0.2
-Release:	1
+Release:	2
 License:	GPL
 Vendor:		Bohdan R. Rau <ethanak@bigfoot.com>
 Group:		Applications/Dictionaries
@@ -35,14 +35,12 @@ install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_bindir},%{_datadir}/%{name}}
 install src/sap $RPM_BUILD_ROOT%{_bindir}
 install	lib/dvp_{1,2}.dic $RPM_BUILD_ROOT%{_datadir}/%{name}
 
-gzip -9nf README saprc
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc *.gz
+%doc README saprc
 %config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}/saprc
 %attr(755,root,root) %{_bindir}/sap
 %{_datadir}/%{name}
