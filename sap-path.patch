@@ -1,0 +1,63 @@
+diff -urN sap-0.1.org/sap.c sap-0.1/sap.c
+--- sap-0.1.org/sap.c	Tue Aug 29 12:40:12 2000
++++ sap-0.1/sap.c	Tue Aug 29 12:41:50 2000
+@@ -3,6 +3,14 @@
+ #include <stdlib.h>
+ #include <string.h>
+ 
++#ifndef DATADIR
++#define	DATADIR		"/usr/lib"
++#endif
++
++#ifndef SYSCONFDIR
++#define SYSCONFDIR	"/etc/sap"
++#endif
++
+ char *verstring="sap V0.1 beta\n";	
+ 	
+ /*
+@@ -107,7 +115,7 @@
+ 	    strcat(avname,"/");
+ 	    strcat(avname,name);
+ 	    if (!(vobel[nr].f=fopen(avname,"r"))) {
+-		strcpy(avname,"/usr/lib/sap/");
++		strcpy(avname,DATADIR "/sap/");
+ 		strcat(avname,name);
+ 	        if (!(vobel[nr].f=fopen(avname,"r"))) exit(100);
+ 	    }
+@@ -256,7 +264,7 @@
+ 	strcat(fline,".saprc");
+ 	if (f=fopen(fline,"r")) goto sapok;
+     }
+-    if (!(f=fopen("/etc/sap/saprc","r"))) return;
++    if (!(f=fopen(SYSCONFDIR "/saprc","r"))) return;
+ sapok:
+     if (!(c=getenv("TERM"))) strcpy(terminal,"dummy");else strcpy(terminal,c);
+     // printf("Current terminal:%s\n",terminal);
+diff -urN sap-0.1.org/xsap.c sap-0.1/xsap.c
+--- sap-0.1.org/xsap.c	Tue Aug 29 12:40:13 2000
++++ sap-0.1/xsap.c	Tue Aug 29 12:42:36 2000
+@@ -31,6 +31,14 @@
+ #include <unistd.h>
+ #include <string.h>
+ 
++#ifndef DATADIR
++#define DATADIR         "/usr/lib"
++#endif
++
++#ifndef SYSCONFDIR
++#define SYSCONFDIR      "/etc/sap"
++#endif
++
+ 
+ struct ColorTextBrowser {
+     FL_OBJECT *frame;
+@@ -533,7 +541,7 @@
+ 	    strcat(avname,"/");
+ 	    strcat(avname,name);
+ 	    if (!(vobel[nr].f=fopen(avname,"r"))) {
+-		strcpy(avname,"/usr/lib/sap/");
++		strcpy(avname,DATADIR "/sap/");
+ 		strcat(avname,name);
+ 	        if (!(vobel[nr].f=fopen(avname,"r"))) exit(100);
+ 	    }
