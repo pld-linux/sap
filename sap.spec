@@ -28,7 +28,10 @@ S³ownik polsko-angielski i angielsko-polski.
 cd src
 %{__cc} %{rpmcflags} -o sap alt_unistd.c charfilter.c sap.c \
 	-DDICTIONARIES_DIRECTORY=\"%{_datadir}/%{name}/\" \
-	-DGLOBAL_SAPRC_FULLPATH=\"%{_sysconfdir}/saprc\"
+	-DGLOBAL_SAPRC_FULLPATH=\"%{_sysconfdir}/saprc\" \
+%ifarch ppc ppc64 sparc sparc64 sparcv9 s390 s390x
+	-DMSB_FIRST_PROCESSOR
+%endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
