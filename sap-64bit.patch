@@ -1,0 +1,79 @@
+--- sap-0.2/src/sap.c.orig	2001-07-27 03:25:42.000000000 +0200
++++ sap-0.2/src/sap.c	2004-11-20 13:59:41.892368256 +0100
+@@ -92,11 +92,11 @@
+ 
+ 
+ struct vobel {
+-    long npages;
+-    long nwords;
+-    long *page_offsets;
+-    long actual_page;
+-    long lastpage,lastindex;
++    int32_t npages;
++    int32_t nwords;
++    int32_t *page_offsets;
++    int32_t actual_page;
++    int32_t lastpage,lastindex;
+     FILE *f;
+     char *pairbuffer;
+     char **pairs;
+@@ -112,7 +112,7 @@
+ ReadVobel(char *name,int nr)
+ {
+     char avname[256];
+-    long v_long,ls,i;char *c;
++    int32_t v_long,ls,i;char *c;
+     if (!(vobel[nr].f=fopen(name,"rb"))) {
+ 	c=getenv("HOME");
+ 	c=NULL;
+@@ -131,7 +131,7 @@
+ 	        if (!(vobel[nr].f=fopen(avname,"rb"))) exit(100);
+ 	}
+     }
+-    if (!fread(&v_long,sizeof(long),1,vobel[nr].f)) goto zle;
++    if (!fread(&v_long,sizeof(int32_t),1,vobel[nr].f)) goto zle;
+ #ifdef MSB_FIRST_PROCESSOR
+ 		lsb2msb(&v_long);
+ #endif
+@@ -139,26 +139,26 @@
+ 	alt_fprintf(asciionly_mode,stderr,"Plik %s nie jest plikiem s³ownika!\n",avname);
+ 	exit(100);
+     }
+-    if (!fread(&vobel[nr].nwords,sizeof(long),1,vobel[nr].f)) goto zle;
++    if (!fread(&vobel[nr].nwords,sizeof(int32_t),1,vobel[nr].f)) goto zle;
+ #ifdef MSB_FIRST_PROCESSOR
+ 		lsb2msb(&(vobel[nr].nwords));
+ #endif
+-    if (!fread(&vobel[nr].npages,sizeof(long),1,vobel[nr].f)) goto zle;
++    if (!fread(&vobel[nr].npages,sizeof(int32_t),1,vobel[nr].f)) goto zle;
+ #ifdef MSB_FIRST_PROCESSOR
+ 		lsb2msb(&(vobel[nr].npages));
+ #endif
+     /* teraz alokujemy tablicê offsetów opisów */
+-    if (!(vobel[nr].page_offsets=malloc(sizeof(long)*vobel[nr].npages))) goto zle;
+-    if (!fread(vobel[nr].page_offsets,sizeof(long)*vobel[nr].npages,1,vobel[nr].f)) goto zle;
++    if (!(vobel[nr].page_offsets=malloc(sizeof(int32_t)*vobel[nr].npages))) goto zle;
++    if (!fread(vobel[nr].page_offsets,sizeof(int32_t)*vobel[nr].npages,1,vobel[nr].f)) goto zle;
+ #ifdef MSB_FIRST_PROCESSOR
+ 	{
+ 		int remaining_longs=vobel[nr].npages;
+-		long *current_point=vobel[nr].page_offsets;
++		int32_t *current_point=vobel[nr].page_offsets;
+ 		while(remaining_longs--)
+ 			lsb2msb(current_point++);
+ 	}
+ #endif
+-    ls=vobel[nr].page_offsets[0]-sizeof(long)*(vobel[nr].npages+3);
++    ls=vobel[nr].page_offsets[0]-sizeof(int32_t)*(vobel[nr].npages+3);
+     if(!(vobel[nr].pairbuffer=malloc(ls))) goto zle;
+     if (!fread(vobel[nr].pairbuffer,1,ls,vobel[nr].f)) goto zle;
+     /* tak jakby wszystko wczytane... */
+@@ -188,7 +188,7 @@
+ 		short_lsb2msb(&vobel[nr].dsize);
+ 		short_lsb2msb(&vobel[nr].dvoffset);
+ #endif
+-    if (!fread(vobel[nr].body,1,(long)vobel[nr].dsize,vobel[nr].f)) goto zle;
++    if (!fread(vobel[nr].body,1,(int32_t)vobel[nr].dsize,vobel[nr].f)) goto zle;
+ #ifdef MSB_FIRST_PROCESSOR
+ 	{
+ 		int remaining_shorts=vobel[nr].wordspp;
