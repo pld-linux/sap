@@ -1,5 +1,5 @@
 Summary:	An English Polish Dictionary
-Summary(pl):	S³ownik Angielsko Polski i Polsko Angielski
+Summary(pl):	S³ownik angielsko-polski i polsko-angielski
 Name:		sap
 Version:	0.1b
 Release:	1
@@ -22,23 +22,25 @@ S³ownik angielsko-polski i polsko-angielski.
 %patch0 -p1
 
 %build
-gcc "%{?debug:-O0 -g}%{!?debug:$RPM_OPT_FLAGS}" -o sap sap.c \
+%{__cc} %{?debug:-O0 -g}%{!?debug:$RPM_OPT_FLAGS} -o sap sap.c \
 	-DDATADIR=\"%{_datadir}\" -DSYSCONFDIR=\"%{_sysconfdir}\"
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir}/%{name},%{_sysconfdir}}
+install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir}/sap,%{_sysconfdir}}
 
 install sap $RPM_BUILD_ROOT%{_bindir}
 install	lib/sap/dvp_{1,2}.dic $RPM_BUILD_ROOT%{_datadir}/sap/
 install .saprc $RPM_BUILD_ROOT%{_sysconfdir}/saprc
+
+gzip -9nf sap.doc
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc *.doc
+%doc *.gz
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/saprc
 %attr(755,root,root) %{_bindir}/sap
 %{_datadir}/%{name}
