@@ -1,63 +1,21 @@
-diff -urN sap-0.1.org/sap.c sap-0.1/sap.c
---- sap-0.1.org/sap.c	Tue Aug 29 12:40:12 2000
-+++ sap-0.1/sap.c	Tue Aug 29 12:41:50 2000
-@@ -3,6 +3,14 @@
- #include <stdlib.h>
- #include <string.h>
+diff -urN sap-0.2.old/src/configuration.h sap-0.2/src/configuration.h
+--- sap-0.2.old/src/configuration.h	Fri Jul 27 04:34:44 2001
++++ sap-0.2/src/configuration.h	Thu Jan 10 22:16:22 2002
+@@ -6,10 +6,17 @@
+ #define MSB_FIRST_PROCESSOR
+ */
  
-+#ifndef DATADIR
-+#define	DATADIR		"/usr/lib"
++#ifndef DICTIONARIES_DIRECTORY
+ #define DICTIONARIES_DIRECTORY "/usr/lib/sap/"
 +#endif
 +
-+#ifndef SYSCONFDIR
-+#define SYSCONFDIR	"/etc/sap"
+ #define DIRECTORY_SEPARATOR "/"
+ #define LOCAL_SAPRC_FILENAME ".saprc"
++
++#ifndef GLOBAL_SAPRC_FULLPATH
+ #define GLOBAL_SAPRC_FULLPATH "/etc/saprc"
 +#endif
 +
- char *verstring="sap V0.1 beta\n";	
- 	
- /*
-@@ -107,7 +115,7 @@
- 	    strcat(avname,"/");
- 	    strcat(avname,name);
- 	    if (!(vobel[nr].f=fopen(avname,"r"))) {
--		strcpy(avname,"/usr/lib/sap/");
-+		strcpy(avname,DATADIR "/sap/");
- 		strcat(avname,name);
- 	        if (!(vobel[nr].f=fopen(avname,"r"))) exit(100);
- 	    }
-@@ -256,7 +264,7 @@
- 	strcat(fline,".saprc");
- 	if (f=fopen(fline,"r")) goto sapok;
-     }
--    if (!(f=fopen("/etc/sap/saprc","r"))) return;
-+    if (!(f=fopen(SYSCONFDIR "/saprc","r"))) return;
- sapok:
-     if (!(c=getenv("TERM"))) strcpy(terminal,"dummy");else strcpy(terminal,c);
-     // printf("Current terminal:%s\n",terminal);
-diff -urN sap-0.1.org/xsap.c sap-0.1/xsap.c
---- sap-0.1.org/xsap.c	Tue Aug 29 12:40:13 2000
-+++ sap-0.1/xsap.c	Tue Aug 29 12:42:36 2000
-@@ -31,6 +31,14 @@
- #include <unistd.h>
- #include <string.h>
+ #define FILENAME_DATABASE_1 "dvp_1.dic"
+ #define FILENAME_DATABASE_2 "dvp_2.dic"
  
-+#ifndef DATADIR
-+#define DATADIR         "/usr/lib"
-+#endif
-+
-+#ifndef SYSCONFDIR
-+#define SYSCONFDIR      "/etc/sap"
-+#endif
-+
- 
- struct ColorTextBrowser {
-     FL_OBJECT *frame;
-@@ -533,7 +541,7 @@
- 	    strcat(avname,"/");
- 	    strcat(avname,name);
- 	    if (!(vobel[nr].f=fopen(avname,"r"))) {
--		strcpy(avname,"/usr/lib/sap/");
-+		strcpy(avname,DATADIR "/sap/");
- 		strcat(avname,name);
- 	        if (!(vobel[nr].f=fopen(avname,"r"))) exit(100);
- 	    }
