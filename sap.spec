@@ -1,7 +1,7 @@
 Summary:	An English Polish Dictionary
 Summary(pl):	S³ownik Angielsko Polski i Polsko Angielski
 Name:		sap
-Version:	0.1
+Version:	0.1b
 Release:	1
 Copyright:	Unknown
 Group:		Applications/Dictionaries
@@ -18,7 +18,7 @@ English Polish / Polish English Dictionary.
 S³ownik angielsko-polski i polsko-angielski.
 
 %prep
-%setup -q
+%setup -q -c
 %patch0 -p1
 
 %build
