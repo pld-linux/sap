@@ -2,7 +2,7 @@ Summary:	A Polish-English-Polish dictionary
 Summary(pl):	S³ownik polsko-angielski i angielsko-polski
 Name:		sap
 Version:	0.2
-Release:	2
+Release:	3
 License:	GPL
 Vendor:		Bohdan R. Rau <ethanak@bigfoot.com>
 Group:		Applications/Dictionaries
