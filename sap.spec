@@ -6,8 +6,6 @@ Release:	1
 License:	GPL
 Vendor:		Bohdan R. Rau <ethanak@bigfoot.com>
 Group:		Applications/Dictionaries
-Group(de):	Applikationen/Wörterbücher
-Group(pl):	Aplikacje/S³owniki
 Source0:	http://www.terravista.pt/Mussulo/1345/sap/%{name}-%{version}.tgz
 Patch0:		%{name}-path.patch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
