@@ -8,7 +8,7 @@ Group:		Applications/Dictionaries
 Group(pl):	Aplikacje/S³owniki
 Vendor:		Bohdan R. Rau <ethanak@bigfoot.com>
 Source0:	http://ethanak.sih.pl/%{name}-%{version}.tar.gz
-Patch0:		sap-path.patch
+Patch0:		%{name}-path.patch
 Buildroot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -27,15 +27,11 @@ gcc $RPM_OPT_FLAGS -o sap sap.c \
 
 %install
 rm -rf $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir}/%{name},%{_sysconfdir}}
 
-install -d $RPM_BUILD_ROOT%{_bindir}
-install -d $RPM_BUILD_ROOT%{_datadir}/%{name}
-install -d $RPM_BUILD_ROOT%{_sysconfdir}
-
-install -s sap			$RPM_BUILD_ROOT%{_bindir}
-install	lib/sap/dvp_1.dic	$RPM_BUILD_ROOT%{_datadir}/sap/dvp_1.dic
-install	lib/sap/dvp_2.dic	$RPM_BUILD_ROOT%{_datadir}/sap/dvp_2.dic
-install .saprc			$RPM_BUILD_ROOT%{_sysconfdir}/saprc
+install -s sap $RPM_BUILD_ROOT%{_bindir}
+install	lib/sap/dvp_{1,2}.dic $RPM_BUILD_ROOT%{_datadir}/sap/
+install .saprc $RPM_BUILD_ROOT%{_sysconfdir}/saprc
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -43,7 +39,6 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc *.doc
+%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/saprc
 %attr(755,root,root) %{_bindir}/sap
-%{_datadir}/%{name}/dvp_1.dic
-%{_datadir}/%{name}/dvp_2.dic
-%attr(644,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/saprc
+%{_datadir}/%{name}
