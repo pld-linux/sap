@@ -7,6 +7,7 @@ License:	GPL
 Vendor:		Bohdan R. Rau <ethanak@bigfoot.com>
 Group:		Applications/Dictionaries
 Source0:	http://www.terravista.pt/Mussulo/1345/sap/%{name}-%{version}.tgz
+# Source0-md5: a185adfa76b0251a5a0ca16000ba5967
 Patch0:		%{name}-path.patch
 URL:		http://www.terravista.pt/Mussulo/1345/sap/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
