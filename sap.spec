@@ -2,9 +2,10 @@ Summary:	An English Polish Dictionary
 Summary(pl):	S³ownik angielsko-polski i polsko-angielski
 Name:		sap
 Version:	0.1b
-Release:	2
+Release:	3
 License:	Unknown
 Group:		Applications/Dictionaries
+Group(de):	Applikationen/Wörterbücher
 Group(pl):	Aplikacje/S³owniki
 Vendor:		Bohdan R. Rau <ethanak@bigfoot.com>
 Source0:	http://ethanak.sih.pl/%{name}-%{version}.tar.gz
@@ -30,7 +31,7 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir}/sap,%{_sysconfdir}}
 
 install sap $RPM_BUILD_ROOT%{_bindir}
-install	lib/sap/dvp_{1,2}.dic $RPM_BUILD_ROOT%{_datadir}/sap/
+install	lib/sap/dvp_{1,2}.dic $RPM_BUILD_ROOT%{_datadir}/sap
 install .saprc $RPM_BUILD_ROOT%{_sysconfdir}/saprc
 
 gzip -9nf sap.doc
