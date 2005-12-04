@@ -47,6 +47,6 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc README saprc
-%config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}/saprc
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/saprc
 %attr(755,root,root) %{_bindir}/sap
 %{_datadir}/%{name}
