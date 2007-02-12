@@ -1,5 +1,5 @@
 Summary:	A Polish-English-Polish dictionary
-Summary(pl):	S³ownik polsko-angielski i angielsko-polski
+Summary(pl.UTF-8):   SÅ‚ownik polsko-angielski i angielsko-polski
 Name:		sap
 Version:	0.2
 Release:	5
@@ -16,8 +16,8 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 Polish English / English Polish dictionary.
 
-%description -l pl
-S³ownik polsko-angielski i angielsko-polski.
+%description -l pl.UTF-8
+SÅ‚ownik polsko-angielski i angielsko-polski.
 
 %prep
 %setup -q
