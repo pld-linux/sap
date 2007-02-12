@@ -1,5 +1,5 @@
 Summary:	A Polish-English-Polish dictionary
-Summary(pl.UTF-8):   Słownik polsko-angielski i angielsko-polski
+Summary(pl.UTF-8):	Słownik polsko-angielski i angielsko-polski
 Name:		sap
 Version:	0.2
 Release:	5
