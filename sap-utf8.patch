@@ -1,0 +1,117 @@
+diff -Nru sap-0.2/src/charfilter.c sap-0.2.utf8/src/charfilter.c
+--- sap-0.2/src/charfilter.c	2001-07-24 18:30:44.000000000 +0200
++++ sap-0.2.utf8/src/charfilter.c	2007-09-11 21:33:31.000000000 +0200
+@@ -1,3 +1,4 @@
++#include <iconv.h>
+ #include <stdlib.h>
+ #include <stdio.h>
+ #include <string.h>
+@@ -14,6 +15,8 @@
+                     "âêëîïóôúû";
+ #endif
+ 
++extern int utf8;
++
+ int alt_fprintf(int asciionly_mode, FILE *fd, const char *given_string, ...)
+ {
+     char my_tempy1[8192];
+@@ -31,7 +34,20 @@
+         filter_fromto_amigapl_iso(my_tempy1, my_tempy2);
+         retcode=fprintf(fd, my_tempy2);
+ #else
+-        retcode=fprintf(fd, my_tempy1);
++        if (utf8) {
++            char utf8_chars[8192*8];
++            char *koniec=utf8_chars;
++            char *buf=my_tempy1;
++            int length=strlen(my_tempy1);
++            int length_utf8=8192*8;
++            iconv_t cd=iconv_open("UTF-8", "ISO-8859-2");
++
++            iconv(cd, &buf, &length, &koniec, &length_utf8);
++            iconv_close(cd);
++            *koniec='\0';
++            retcode=fprintf(fd, utf8_chars);
++        } else
++            retcode=fprintf(fd, my_tempy1);
+ #endif
+     }
+     va_end(marker);
+@@ -44,6 +60,21 @@
+         filter_from_ascii(given_string, given_string, -1);
+ }
+ 
++void transform_from_utf8(char *slowo)
++{
++    char buf[32];
++    char *pbuf=buf;
++    char *old_buf=slowo;
++    int length_utf8=strlen(slowo);
++    int length=32;
++    iconv_t cd=iconv_open("ISO-8859-2", "UTF-8");
++
++    iconv(cd, &old_buf, &length_utf8, &pbuf, &length);
++    iconv_close(cd);
++    *pbuf++ = '\0';
++    memcpy(slowo, buf, pbuf - buf);
++}
++
+ #ifdef OS_AMIGAOS
+ void transform_fromto_amigapl_iso(char *given_string)
+ {
+diff -Nru sap-0.2/src/charfilter.h sap-0.2.utf8/src/charfilter.h
+--- sap-0.2/src/charfilter.h	2001-07-23 23:06:44.000000000 +0200
++++ sap-0.2.utf8/src/charfilter.h	2007-09-11 21:33:31.000000000 +0200
+@@ -2,6 +2,7 @@
+ 
+ int alt_fprintf(int asciionly_mode, FILE *fd, const char *given_string, ...);
+ void transform_from_ascii(int asciionly_mode, char *given_string);
++void transform_from_utf8(char *slowo);
+ const char *filter_to_ascii(const char *given_string, char *output_buffer, int maxchars);
+ const char *filter_from_ascii(const char *given_string, char *output_buffer, int maxchars);
+ 
+diff -Nru sap-0.2/src/sap.c sap-0.2.utf8/src/sap.c
+--- sap-0.2/src/sap.c	2007-09-11 21:40:56.000000000 +0200
++++ sap-0.2.utf8/src/sap.c	2007-09-11 21:45:15.000000000 +0200
+@@ -1,3 +1,5 @@
++#include <langinfo.h>
++#include <locale.h>
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <string.h>
+@@ -11,6 +13,7 @@
+ 
+ char *verstring="sap V0.2 beta";
+ 
++int utf8 = 0;
+ /*
+ 
+ Poni¿sze procedury uwzglêdniaj± specyfikê kolejno¶ci
+@@ -540,6 +543,7 @@
+     if (!ixi) goto noslowo;
+ }
+ char slowo[32];
++
+ trim(char *c)
+ {
+     char *d;int n;
+@@ -573,6 +577,9 @@
+     lmode=0;
+     asciionly_mode=0;
+ 
++    setlocale(LC_ALL, "");
++    utf8 = !strcasecmp(nl_langinfo(CODESET), "UTF-8");
++
+     while((opcja=alt_getopt(argc,argv,"ivhpalf:"))!=EOF) {
+         switch(opcja) {
+ 	    case 'v': alt_fprintf(asciionly_mode,stderr,"%s",verstring);exit(0);
+@@ -652,6 +659,9 @@
+ 	    if (tolower(slowo[1])=='a') voc='a';
+ 	    continue;
+ 	    }
++	if (utf8) {
++	    transform_from_utf8(slowo);
++	}
+ 	trim(slowo);
+ 			if (asciionly_mode){
+ 		  		transform_from_ascii(asciionly_mode,slowo);
