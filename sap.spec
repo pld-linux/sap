@@ -2,7 +2,7 @@ Summary:	A Polish-English-Polish dictionary
 Summary(pl.UTF-8):	Słownik polsko-angielski i angielsko-polski
 Name:		sap
 Version:	0.2
-Release:	6
+Release:	7
 License:	GPL
 Vendor:		Bohdan R. Rau <ethanak@bigfoot.com>
 Group:		Applications/Dictionaries
@@ -28,7 +28,7 @@ Słownik polsko-angielski i angielsko-polski.
 
 %build
 cd src
-%{__cc} %{rpmcflags} -o sap alt_unistd.c charfilter.c sap.c \
+%{__cc} %{rpmcppflags} %{rpmcflags} %{rpmldflags} -o sap alt_unistd.c charfilter.c sap.c \
 	-DDICTIONARIES_DIRECTORY=\"%{_datadir}/%{name}/\" \
 	-DGLOBAL_SAPRC_FULLPATH=\"%{_sysconfdir}/saprc\" \
 %ifarch ppc ppc64 sparc sparc64 sparcv9 s390 s390x

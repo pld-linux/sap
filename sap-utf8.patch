@@ -24,8 +24,8 @@ diff -Nru sap-0.2/src/charfilter.c sap-0.2.utf8/src/charfilter.c
 +            char utf8_chars[8192*8];
 +            char *koniec=utf8_chars;
 +            char *buf=my_tempy1;
-+            int length=strlen(my_tempy1);
-+            int length_utf8=8192*8;
++            size_t length=strlen(my_tempy1);
++            size_t length_utf8=8192*8;
 +            iconv_t cd=iconv_open("UTF-8", "ISO-8859-2");
 +
 +            iconv(cd, &buf, &length, &koniec, &length_utf8);
@@ -46,8 +46,8 @@ diff -Nru sap-0.2/src/charfilter.c sap-0.2.utf8/src/charfilter.c
 +    char buf[32];
 +    char *pbuf=buf;
 +    char *old_buf=slowo;
-+    int length_utf8=strlen(slowo);
-+    int length=32;
++    size_t length_utf8=strlen(slowo);
++    size_t length=32;
 +    iconv_t cd=iconv_open("ISO-8859-2", "UTF-8");
 +
 +    iconv(cd, &old_buf, &length_utf8, &pbuf, &length);
