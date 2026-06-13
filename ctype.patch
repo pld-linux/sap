@@ -1,0 +1,8 @@
+diff -up sap-0.2/src/sap.c.old sap-0.2/src/sap.c
+--- sap-0.2/src/sap.c.old	2026-06-13 17:38:28.104402318 +0200
++++ sap-0.2/src/sap.c	2026-06-13 17:39:48.399731193 +0200
+@@ -1,3 +1,4 @@
++#include <ctype.h>
+ #include <langinfo.h>
+ #include <locale.h>
+ #include <stdio.h>

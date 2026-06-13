@@ -1,0 +1,123 @@
+diff -up sap-0.2/src/sap.c.old sap-0.2/src/sap.c
+--- sap-0.2/src/sap.c.old	2026-06-13 17:32:24.119537786 +0200
++++ sap-0.2/src/sap.c	2026-06-13 17:36:27.229424401 +0200
+@@ -33,6 +33,7 @@ unsigned char *txt2="A¡BCÆDEÊFGHIJKL£MNÑ
+ 
+ int asciionly_mode; /* if true use only base ASCII (<128) chars */
+ 
++void
+ mk_convt(void)
+ {
+     int i;unsigned char *c1,*c2;
+@@ -44,17 +45,20 @@ mk_convt(void)
+ 	}
+ }
+ 
++int
+ is_prt(int c)
+ {
+     return _convtable[c&255];
+ }
+ 
++int
+ l_tolower(int c)
+ {
+     if (!_convtable[c=(c&255)]) return 0;
+     return _avtable[c];
+ }
+ 
++int
+ l_compare(char *c1,char *c2)
+ {
+      for (;*c1;c1++,c2++) {
+@@ -66,6 +70,7 @@ l_compare(char *c1,char *c2)
+     return 0;
+ }
+ 
++int
+ l_match(char *c1,char *c2)
+ {
+      for (;*c1;c1++,c2++) {
+@@ -77,6 +82,7 @@ l_match(char *c1,char *c2)
+     return 0;
+ }
+ 
++int
+ l_pmatch(char *c1,char *c2)
+ {
+     for (;;) {
+@@ -112,6 +118,7 @@ struct vobel {
+     char body[16384];
+ } vobel[2];
+ 
++void
+ ReadVobel(char *name,int nr)
+ {
+     char avname[256];
+@@ -179,6 +186,7 @@ zle:
+     exit(21);
+ }
+ 
++void
+ read_page(nr,np) int nr,np;
+ {
+     if (vobel[nr].actual_page==np) return;
+@@ -258,6 +266,7 @@ char vide[2][32]={"\x1b[33m","\x1b[0m"};
+ char count[2][32]={"\x1b[33m","\x1b[0m"};
+ char header[2][32]={"\x1b[31m","\x1b[0m"};
+ 
++void
+ parsestr(c) char *c;
+ {
+     char *d;int i,v;
+@@ -269,6 +278,8 @@ parsestr(c) char *c;
+     }
+     *d=0;
+ }
++
++void
+ linetoparam(line) char *line;
+ {
+     char cv1[32],cv2[32],*c,*d;int cx,i;
+@@ -297,6 +308,7 @@ linetoparam(line) char *line;
+     }
+ }
+ 
++void
+ getsaprc()
+ {
+     char terminal[256],*c,*d;int got;
+@@ -353,7 +365,7 @@ sapok:
+ 
+ 
+ 
+-
++void
+ mksecbuf(hass) char *hass;
+ {
+     char *c,*d;int v,i,mc,cdoll;
+@@ -419,7 +431,7 @@ mksecbuf(hass) char *hass;
+     *d=0;
+ }
+ 
+-
++void
+ findslowo(slowo,nr,f) char *slowo;int nr;FILE *f;
+ {
+ 
+@@ -544,6 +556,7 @@ xmatch:
+ }
+ char slowo[32];
+ 
++void
+ trim(char *c)
+ {
+     char *d;int n;
+@@ -566,6 +579,7 @@ char *helpstring=""
+ "s³owa pasuj±ce do wzorca w którym gwiazdka zastêpuje dowolny (równie¿ pusty)\n"
+ "ci±g znaków. Ilo¶æ wypisanych hase³ jest ograniczona do 100.\n"
+ "";
++int
+ main(int argc,char *argv[])
+ {
+     int opcja,voc,lmode,vsl;
