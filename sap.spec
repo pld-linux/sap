@@ -2,7 +2,7 @@ Summary:	A Polish-English-Polish dictionary
 Summary(pl.UTF-8):	Słownik polsko-angielski i angielsko-polski
 Name:		sap
 Version:	0.2
-Release:	8
+Release:	9
 License:	GPL
 Vendor:		Bohdan R. Rau <ethanak@bigfoot.com>
 Group:		Applications/Dictionaries
@@ -14,6 +14,7 @@ Patch2:		%{name}-utf8.patch
 Patch3:		format.patch
 Patch4:		rettype.patch
 Patch5:		ctype.patch
+Patch6:		zero.patch
 URL:		http://www.terravista.pt/Mussulo/1345/sap/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -31,6 +32,7 @@ Słownik polsko-angielski i angielsko-polski.
 %patch -P3 -p1
 %patch -P4 -p1
 %patch -P5 -p1
+%patch -P6 -p1
 
 %build
 cd src
