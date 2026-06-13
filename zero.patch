@@ -1,0 +1,21 @@
+diff -up sap-0.2/src/charfilter.c.old sap-0.2/src/charfilter.c
+--- sap-0.2/src/charfilter.c.old	2026-06-13 18:12:16.743792859 +0200
++++ sap-0.2/src/charfilter.c	2026-06-13 18:12:56.331456608 +0200
+@@ -35,7 +35,7 @@ int alt_fprintf(int asciionly_mode, FILE
+         retcode=fputs(my_tempy2, fd);
+ #else
+         if (utf8) {
+-            char utf8_chars[8192*8];
++            char utf8_chars[8192*8]={0};
+             char *koniec=utf8_chars;
+             char *buf=my_tempy1;
+             size_t length=strlen(my_tempy1);
+@@ -44,7 +44,7 @@ int alt_fprintf(int asciionly_mode, FILE
+ 
+             iconv(cd, &buf, &length, &koniec, &length_utf8);
+             iconv_close(cd);
+-            *koniec='\0';
++            //*koniec='\0';
+             retcode=fputs(utf8_chars, fd);
+         } else
+             retcode=fputs(my_tempy1, fd);
