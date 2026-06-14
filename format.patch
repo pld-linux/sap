@@ -14,7 +14,7 @@ diff -up sap-0.2/src/charfilter.c.old sap-0.2/src/charfilter.c
 +        retcode=fputs(my_tempy2, fd);
  #else
          if (utf8) {
-             char utf8_chars[8192*8];
+             char utf8_chars[8192*4];
 @@ -45,9 +45,9 @@ int alt_fprintf(int asciionly_mode, FILE
              iconv(cd, &buf, &length, &koniec, &length_utf8);
              iconv_close(cd);

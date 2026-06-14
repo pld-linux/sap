@@ -14,7 +14,6 @@ Patch2:		%{name}-utf8.patch
 Patch3:		format.patch
 Patch4:		rettype.patch
 Patch5:		ctype.patch
-Patch6:		zero.patch
 URL:		http://www.terravista.pt/Mussulo/1345/sap/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -32,7 +31,6 @@ Słownik polsko-angielski i angielsko-polski.
 %patch -P3 -p1
 %patch -P4 -p1
 %patch -P5 -p1
-%patch -P6 -p1
 
 %build
 cd src

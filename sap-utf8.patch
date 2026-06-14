@@ -21,11 +21,11 @@ diff -Nru sap-0.2/src/charfilter.c sap-0.2.utf8/src/charfilter.c
  #else
 -        retcode=fprintf(fd, my_tempy1);
 +        if (utf8) {
-+            char utf8_chars[8192*8];
++            char utf8_chars[8192*4];
 +            char *koniec=utf8_chars;
 +            char *buf=my_tempy1;
 +            size_t length=strlen(my_tempy1);
-+            size_t length_utf8=8192*8;
++            size_t length_utf8=8192*4;
 +            iconv_t cd=iconv_open("UTF-8", "ISO-8859-2");
 +
 +            iconv(cd, &buf, &length, &koniec, &length_utf8);
